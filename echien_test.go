@@ -347,7 +347,7 @@ func Test_Local_Document(t *testing.T) {
 
 	e := new(EChien)
 
-	_, err := e.Open("/Users/adrianloh/Desktop/gokali/src/echien/test.html")
+	_, err := e.Open("https://raw.githubusercontent.com/adrianloh/echien/master/test.html")
 
 	if err != nil {
 		t.Errorf(err.Error())
