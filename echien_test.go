@@ -405,30 +405,6 @@ func Test_Avaxhome(t *testing.T) {
 
 }
 
-func Test_ReleaseLog(t *testing.T) {
-
-	e := new(EChien)
-
-	_, err := e.Open("http://www.rlsbb.com/show-usa-november-2014/")
-
-	if err != nil {
-		t.Errorf(err.Error())
-		return
-	}
-
-	searches := map[string]int{
-		`a@text=uploaded`:  1,
-		`a@text=tutorials`: 1}
-
-	for search, expected := range searches {
-		els := e.Find(search)
-		if len(els) != expected {
-			t.Errorf(`"%s" | Expected %d got %d`, search, expected, len(els))
-		}
-	}
-
-}
-
 /*
 
 

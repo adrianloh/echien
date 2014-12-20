@@ -136,8 +136,8 @@ func (e *EChien) parse() int {
 			}
 			e.elements = append(e.elements, &el)
 		} else if tokenType == html.TextToken {
-			text = re_remove.ReplaceAllString(text, "")
-			text := re_head.ReplaceAllString(token.Data, "")
+			text := re_remove.ReplaceAllString(token.Data, "")
+			text = re_head.ReplaceAllString(text, "")
 			text = re_tail.ReplaceAllString(text, "")
 			if text != "" && re_letters.MatchString(text) {
 				lastEl := e.elements[len(e.elements)-1]
