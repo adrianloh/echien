@@ -45,15 +45,15 @@ func Test_Has_Class(t *testing.T) {
 
 func Test_Has_Attribute(t *testing.T) {
 
-	if el.getAttribute("text") != text {
+	if el.GetAttribute("text") != text {
 		t.Errorf("Expected innerText not found")
 	}
 
-	if el.getAttribute("bullshit") != "" {
-		t.Errorf("Found unexpected innerText: %s", el.getAttribute("bullshit"))
+	if el.GetAttribute("bullshit") != "" {
+		t.Errorf("Found unexpected innerText: %s", el.GetAttribute("bullshit"))
 	}
 
-	if el.getAttribute("position") != "doggystyle" {
+	if el.GetAttribute("position") != "doggystyle" {
 		t.Errorf("Expected to get attribute")
 	}
 
@@ -345,9 +345,7 @@ func Test_Decompose(t *testing.T) {
 
 func Test_Local_Document(t *testing.T) {
 
-	e := new(EChien)
-
-	_, err := e.Open("https://raw.githubusercontent.com/adrianloh/echien/master/test.html")
+	e, err := Open("https://raw.githubusercontent.com/adrianloh/echien/master/test.html")
 
 	if err != nil {
 		t.Errorf(err.Error())
@@ -383,9 +381,7 @@ func Test_Local_Document(t *testing.T) {
 
 func Test_Avaxhome(t *testing.T) {
 
-	e := new(EChien)
-
-	_, err := e.Open("http://avaxhm.com/girls/Nicki-Minaj-Roberto-Cavalli-Spring-Summer-2015.html")
+	e, err := Open("http://avaxhm.com/girls/Nicki-Minaj-Roberto-Cavalli-Spring-Summer-2015.html")
 
 	if err != nil {
 		t.Errorf(err.Error())

@@ -29,7 +29,7 @@ func (el *El) hasClass(name string) bool {
 	return hasClass
 }
 
-func (el *El) getAttribute(attr string) string {
+func (el *El) GetAttribute(attr string) string {
 	if attr == "text" {
 		return el.text
 	} else {
@@ -46,29 +46,31 @@ type EChien struct {
 	body     *html.Tokenizer
 }
 
-func (e *EChien) Open(path string) (int, error) {
+func Open(path string) (*EChien, error) {
+
+	echien := &EChien{}
 
 	m, _ := regexp.MatchString("^http", path)
 	if m {
 		res, err := http.Get(path)
 		if err != nil {
-			return 0, err
+			return echien, err
 		}
-		e.body = html.NewTokenizer(res.Body)
+		echien.body = html.NewTokenizer(res.Body)
 	} else {
 		file, err := os.Open(path)
 		if err != nil {
-			return 0, err
+			return echien, err
 		}
-		e.body = html.NewTokenizer(file)
+		echien.body = html.NewTokenizer(file)
 	}
 
-	count := e.parse()
+	count := echien.parse()
 
 	if count > 0 {
-		return count, nil
+		return echien, nil
 	} else {
-		return 0, errors.New("No nodes parsed")
+		return echien, errors.New("No nodes parsed")
 	}
 
 }
@@ -186,7 +188,7 @@ func classF(class string) func(el *El) bool {
 
 func attributeEqual(attrib string, value string) func(el *El) bool {
 	return func(el *El) bool {
-		v := el.getAttribute(attrib)
+		v := el.GetAttribute(attrib)
 		return (v == value)
 	}
 }
@@ -198,7 +200,7 @@ func attributeStartsWith(attrib string, searchString string) func(el *El) bool {
 		return alwaysFalse
 	}
 	return func(el *El) bool {
-		v := el.getAttribute(attrib)
+		v := el.GetAttribute(attrib)
 		if v == "" {
 			return false
 		}
@@ -214,7 +216,7 @@ func attributeEndsWith(attrib string, searchString string) func(el *El) bool {
 		return alwaysFalse
 	}
 	return func(el *El) bool {
-		v := el.getAttribute(attrib)
+		v := el.GetAttribute(attrib)
 		if v == "" {
 			return false
 		}
@@ -230,7 +232,7 @@ func attributeRegex(attrib string, searchString string) func(el *El) bool {
 		return alwaysFalse
 	}
 	return func(el *El) bool {
-		v := el.getAttribute(attrib)
+		v := el.GetAttribute(attrib)
 		if v == "" {
 			return false
 		}
@@ -246,7 +248,7 @@ func attributeDoesNotContain(attrib string, searchString string) func(el *El) bo
 		return alwaysFalse
 	}
 	return func(el *El) bool {
-		v := el.getAttribute(attrib)
+		v := el.GetAttribute(attrib)
 		if v == "" {
 			return true
 		}
@@ -257,7 +259,7 @@ func attributeDoesNotContain(attrib string, searchString string) func(el *El) bo
 
 func idF(id string) func(el *El) bool {
 	return func(el *El) bool {
-		v := el.getAttribute("id")
+		v := el.GetAttribute("id")
 		return (v == id)
 	}
 }
